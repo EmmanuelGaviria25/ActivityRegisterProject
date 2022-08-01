@@ -1,4 +1,4 @@
-GRANT ALL PRIVILEGES ON *.* TO 'admin'@'localhost' IDENTIFIED BY 'admin';
+GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' IDENTIFIED BY 'admin';
 
 CREATE DATABASE activity_regiter;
 
@@ -9,24 +9,19 @@ CREATE TABLE `activity` (
   `description` varchar(255) NOT NULL,
   `status` varchar(20) NOT NULL,
   `title` varchar(100) NOT NULL,
-  `employee_id` bigint(20) NOT NULL
+  `employee_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `employee_ref` (`employee_id`)
 );
-
-ALTER TABLE `activity`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `FKm67enjapuo2hd7irnv1k2fx7t` (`employee_id`);
-
 
 CREATE TABLE `employee` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `document` varchar(255) NOT NULL,
   `first_name` varchar(100) NOT NULL,
   `last_name` varchar(100) NOT NULL,
-  `phone` varchar(20) DEFAULT NULL
+  `phone` varchar(20) DEFAULT NULL,
+   PRIMARY KEY (`id`)
 );
-
-ALTER TABLE `employee`
-  ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `activity`
   ADD CONSTRAINT `activity_employee` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`);
