@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+.modal {
+    z-index: 1060 !important;
+}
+.sidebar[data-color=red]:after, .off-canvas-sidebar[data-color=red]:after {
+    background: linear-gradient(#1f1f1f 0%,#976161 80%);
+}
+.panel-header {
+    background: linear-gradient(160deg,#1f1f1f 0%,#976161 100%);
+}
+.main-panel .main-content {
+    margin-top: -70px;
+}

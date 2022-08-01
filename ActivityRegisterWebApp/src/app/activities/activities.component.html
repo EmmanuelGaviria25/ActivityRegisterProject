@@ -1,0 +1,126 @@
+<div class="panel-header panel-header-sm">
+</div>
+<div class="main-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <button class="btn btn-round btn-outline-primary pull-right" (click)="open(content)">Add
+                        Activity</button>
+                    <h4 class="card-title"><b>Activities' list</b></h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class=" text-primary">
+                                <th>Id</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Status</th>
+                                <th>Employee asigned</th>
+                                <th>Date of execution</th>
+                                <th>Days late</th>
+                                <th></th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let activity of activities">
+                                    <td>{{activity.id}}</td>
+                                    <td>{{activity.title}}</td>
+                                    <td>{{activity.description}}</td>
+                                    <td>{{activity.status}}</td>
+                                    <td>{{activity.employee.firstName + " " + activity.employee.lastName}}</td>
+                                    <td>{{activity.dateTimeExecution | date:'medium' }}</td>
+                                    <td>{{activity.daysLate}}</td>
+                                    <td>
+                                        <div ngbDropdown>
+                                            <button type="button"
+                                                class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret"
+                                                ngbDropdownToggle>
+                                                <i class="now-ui-icons loader_gear"></i>
+                                            </button>
+                                            <div ngbDropdownMenu class="dropdown-menu-right">
+                                                <button class="dropdown-item"
+                                                    (click)="edit(activity, activity.employee.id, content)">Edit</button>
+                                                <button class="dropdown-item text-danger"
+                                                    (click)="deleteById(activity.id)">Remove</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #content let-modal let-c="close" let-d="dismiss">
+    <div class="card">
+        <div class="card-header">
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <h5 class="title">Activity's form</h5>
+        </div>
+        <div class="card-body">
+            <form (ngSubmit)="onSubmit(activity)">
+
+                <div class="row"
+                    style="background-color: #d1d1d1a8; border-top: 1px solid #838383; border-bottom: 1px solid #838383;">
+                    <div class="col-md-5 pr-1">
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select name="status" class="form-control" [(ngModel)]="activity.status"
+                                style="background-color: #ffffffee;">
+                                <option *ngFor="let status of statuses" [value]="status">
+                                    {{status}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-5 pr-1">
+                        <div class="form-group">
+                            <label for="employee">Employee</label>
+                            <select name="employeeId" class="form-control" [(ngModel)]="activity.employeeId"
+                                style="background-color: #ffffffee;">
+                                <option [selected] [value]=""></option>
+                                <option *ngFor="let employee of employees" [value]="employee.id">
+                                    {{employee.firstName + " " + employee.lastName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 pr-1">
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" class="form-control" name="title" placeholder="Title"
+                                [(ngModel)]="activity.title">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 px-1">
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea rows="4" cols="80" class="form-control" maxlength="255"
+                                style="background-color: #d1d1d1a8; border-radius: 20px;" name="description"
+                                [(ngModel)]="activity.description"
+                                placeholder="Here can be your description"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <button *ngIf="activity.id == null" class="btn btn-round btn-outline-primary pull-right"
+                    type="submit">Save</button>
+                <button *ngIf="activity.id != null" class="btn btn-round btn-outline-primary pull-right"
+                    type="submit">Edit</button>
+                <button class="btn btn-round btn-default btn-simple pull-right"
+                    (click)="c('Close click')">Cancel</button>
+            </form>
+        </div>
+    </div>
+</ng-template>

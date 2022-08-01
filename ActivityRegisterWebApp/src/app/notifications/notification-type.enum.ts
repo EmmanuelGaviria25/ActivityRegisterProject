@@ -1,0 +1,7 @@
+export enum NotificationType {
+    INFO = "info",
+    SUCCESS = "success",
+    WARNING = "warning",
+    DANGER = "danger",
+    PRIMARY = "primary"
+}
